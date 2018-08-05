@@ -14,6 +14,16 @@ ballsize = 3
 ballxdir = 5
 ballydir = -3
 
+--bounce the ball off the paddle
+function bouncepaddle()
+ if ballx>=padx and
+  ballx<=padx+padw and
+  bally>pady then
+  sfx(1)
+  ballydir=-ballydir
+ end
+end
+
 function moveball()
  ballx+=ballxdir
  bally+=ballydir
@@ -27,11 +37,33 @@ function movepaddle()
  end
 end
 
+function bounceball()
+ --left
+ if ballx<ballsize then
+  ballxdir=-ballxdir
+  sfx(0)
+ end
+ 
+ --right
+ if ballx>128-ballsize then
+  ballxdir=-ballxdir
+  sfx(0)
+ end
+ 
+ --top
+ if bally<ballsize then
+  ballydir=-ballydir
+  sfx(0)
+ end
+end
+
 --
 -- the update ♥
 --
 function _update()
  movepaddle()
+ bounceball()
+ bouncepaddle()
  moveball()
 end
 
